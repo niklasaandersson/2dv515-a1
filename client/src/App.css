@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+}
+
+.badge {
+  transition: opacity 0.2s;
+}
+
+.badge:hover {
+  opacity: 0.8;
+}
