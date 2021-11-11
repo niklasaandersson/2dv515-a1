@@ -15,23 +15,27 @@ function App () {
     resultType: ''
   })
 
-  const getUsers = async (dataSet) => {
-    if (dataSet !== '') {
-      const users = await getUsersCall(dataSet)
-      const newState = { ...state }
-      newState.users = (users)
-      setState(newState)
-    }
-  }
+  useEffect(() => {
+    const getUsers = async (dataSet) => {
+      if (dataSet !== '') {
+        const users = await getUsersCall(dataSet)
 
-  useEffect(async () => {
-    await getUsers(state.dataSet)
+        setState((state) => {
+          const newState = { ...state }
+          newState.users = users
+          return newState
+        })
+      }
+    }
+
+    getUsers(state.dataSet)
   }, [state.dataSet])
 
   const handleSelectDataSet = dataSet => {
     const newState = { ...state }
     newState.dataSet = dataSet
-    console.log(dataSet)
+    newState.users = []
+    newState.user = ''
     setState(newState)
   }
 
@@ -82,7 +86,9 @@ function App () {
             />
             : null}
 
-          {state.user !== '' && state.method !== '' && state.noOfResults !== '' && state.resultType !== '' ? <AppTable /> : null}
+          {state.user !== '' && state.method !== '' && state.noOfResults !== '' && state.resultType !== ''
+            ? <AppTable state={state} />
+            : null}
 
         </div>
       </div>

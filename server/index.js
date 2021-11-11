@@ -5,7 +5,12 @@ const logger = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const path = require('path')
+const usersRouter = require('./routes/usersRouter')
+const matchingUsersRouter = require('./routes/matchingUsersRouter')
+const recommendedMoviesRouter = require('./routes/recommendedMoviesRouter')
+const recommendationsItemBasedRouter = require('./routes/recommendationsItemBasedRouter')
 require('dotenv').config()
+
 // ----------------- End of Import-----------------
 const app = express()
 
@@ -30,20 +35,10 @@ app.get('/', (req, res) => {
   res.status(200).json('Hello World!')
 })
 
-app.get(`/${process.env.API_VERSION}/users`, (req, res) => {
-  const users = [
-    { id: 1, name: 'Lisa' },
-    { id: 2, name: 'Gene' },
-    { id: 3, name: 'Mike' },
-    { id: 4, name: 'Claudia' },
-    { id: 5, name: 'Mick' },
-    { id: 6, name: 'Jack' },
-    { id: 7, name: 'Toby' }
-  ]
-
-  console.log(req.query)
-  res.status(200).json(users)
-})
+app.use(`/api/${process.env.API_VERSION}/users`, usersRouter)
+app.use(`/api/${process.env.API_VERSION}/matching-users`, matchingUsersRouter)
+app.use(`/api/${process.env.API_VERSION}/recommended-movies`, recommendedMoviesRouter)
+app.use(`/api/${process.env.API_VERSION}/recommendations-item-based`, recommendationsItemBasedRouter)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
