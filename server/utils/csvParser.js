@@ -5,13 +5,12 @@ let csvData = []
 
 const utils = {}
 
-utils.readCsvFromFile = (path) => {
+utils.read = (path) => {
   csvData = []
   return new Promise((resolve, reject) => {
     fs.createReadStream(path)
       .pipe(csv({}))
       .on('data', (dataRow) => {
-        dataRow.id = parseInt(dataRow.id)
         csvData.push(dataRow)
       })
       .on('end', () => {

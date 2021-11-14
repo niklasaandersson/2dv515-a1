@@ -1,18 +1,27 @@
 'use strict'
-const reader = require('../utils/readFromFile')
+const csvParser = require('../utils/csvParser')
 const path = require('path')
 const controller = {}
 
 controller.getUsers = async (req, res) => {
   if (req.query.dataSet === 'small') {
-    const users = await reader.readCsvFromFile(path.join(__dirname, '../data/movies_small/users.csv'))
+    const users = await csvParser.read(path.join(__dirname, '../data/movies_small/users.csv'))
     res.status(200).json(users)
   } else if (req.query.dataSet === 'large') {
-    const users = await reader.readCsvFromFile(path.join(__dirname, '../data/movies_large/users.csv'))
+    const users = await csvParser.read(path.join(__dirname, '../data/movies_large/users.csv'))
     res.status(200).json(users)
   } else {
     res.status(400).json({ message: 'Dataset must be included.' })
   }
+}
+
+controller.getUserNameFromID = async (pathFile, userId) => {
+  const users = await csvParser.read(path.join(__dirname, pathFile))
+  console.log(users)
+  console.log(userId)
+  const user = users.map(u => u.id === userId)
+  console.log(user)
+  return user.name
 }
 
 module.exports = controller
