@@ -1,6 +1,6 @@
 import React from 'react'
 
-function AppForm ({ state, onSelectUser, onSelectMethod, onSelectNoOfResults, onSelectResultType }) {
+function UserForm ({ state, onSelectUser, onSelectMethod, onSelectNoOfResults }) {
   return (
     <>
       <div className='row'>
@@ -42,48 +42,17 @@ function AppForm ({ state, onSelectUser, onSelectMethod, onSelectNoOfResults, on
             type='number'
             className='form-control'
             placeholder='No. of Results'
+            defaultValue=''
             min='1'
-            max='10'
+            max={state.users.length - 1}
             required
             onChange={onSelectNoOfResults}
           />
         </div>
       </div>
-
-      <div className='mt-3' style={{ textAlign: 'start' }}>
-
-        <a href='/#'>
-          <span
-            className={state.resultType === 1 ? 'badge rounded-pill bg-primary  me-1' : 'badge rounded-pill bg-secondary  me-1'}
-            onClick={() => onSelectResultType(1)}
-          >
-                  Find top matching users
-          </span>
-        </a>
-
-        <a href='/#'>
-          <span
-            className={state.resultType === 2 ? 'badge rounded-pill bg-primary  me-1' : 'badge rounded-pill bg-secondary  me-1'}
-            onClick={() => onSelectResultType(2)}
-          >
-                  Find recommended movies
-          </span>
-        </a>
-
-        <a href='/#'>
-          <span
-            className={state.resultType === 3 ? 'badge rounded-pill bg-primary' : 'badge rounded-pill bg-secondary'}
-            onClick={() => onSelectResultType(3)}
-          >
-                  Find recommendations, item-based
-          </span>
-        </a>
-
-      </div>
-
     </>
 
   )
 }
 
-export default AppForm
+export default UserForm

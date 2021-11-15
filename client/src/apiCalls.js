@@ -9,6 +9,17 @@ export async function getUsersCall (dataSet) {
   return response.json()
 }
 
+export async function getMoviesCall (dataSet) {
+  const response = await window.fetch(`${process.env.REACT_APP_SERVER_URL}/api/${process.env.REACT_APP_API_VERSION}/movies?dataSet=${dataSet}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    }
+  })
+  return response.json()
+}
+
 export async function getMatchingUsers (userId, method, limit, dataSet) {
   const response = await window.fetch(`${process.env.REACT_APP_SERVER_URL}/api/${process.env.REACT_APP_API_VERSION}/matching-users?userId=${userId}&method=${method}&limit=${limit}&dataSet=${dataSet}`, {
     method: 'GET',
