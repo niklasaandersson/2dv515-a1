@@ -4,18 +4,18 @@ const controller = {}
 
 controller.getRecommendationsItemBased = async (req, res) => {
   const { userId, method, limit, dataSet } = req.query
+  let data = []
   if (method === 'euclidean') {
-    console.log('-------euclidean')
+    data.push({ name: 'testEuc', id: 9, score: 9.99 })
+    data.push({ name: 'testEuc', id: 9, score: 9.99 })
   }
   if (method === 'pearson') {
-    console.log('-------pearson')
+    data.push({ name: 'testPer', id: 9, score: 9.99 })
+    data.push({ name: 'testPer', id: 9, score: 9.99 })
   }
-  console.log(userId)
-  console.log(method)
-  console.log(limit)
-  console.log(dataSet)
-
-  res.sendStatus(200)
+  data.sort((a, b) => b.score - a.score)
+  data = data.slice(0, limit)
+  res.status(200).json({ data })
 }
 
 module.exports = controller

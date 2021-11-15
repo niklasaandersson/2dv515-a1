@@ -31,8 +31,8 @@ export async function getMatchingUsers (userId, method, limit, dataSet) {
   return response.json()
 }
 
-export async function getRecommendedMovies (userId, method, limit, dataSet) {
-  const response = await window.fetch(`${process.env.REACT_APP_SERVER_URL}/api/${process.env.REACT_APP_API_VERSION}/recommended-movies?userId=${userId}&method=${method}&limit=${limit}&dataSet=${dataSet}`, {
+export async function getRecommendedMovies (movieId, limit, dataSet) {
+  const response = await window.fetch(`${process.env.REACT_APP_SERVER_URL}/api/${process.env.REACT_APP_API_VERSION}/recommended-movies?movieId=${movieId}&limit=${limit}&dataSet=${dataSet}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

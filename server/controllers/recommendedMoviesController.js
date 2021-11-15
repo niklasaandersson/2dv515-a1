@@ -3,13 +3,15 @@
 const controller = {}
 
 controller.getRecommendedMovies = async (req, res) => {
-  const { userId, method, limit, dataSet } = req.query
+  const { movieId, limit, dataSet } = req.query
 
-  console.log(userId)
-  console.log(method)
+  console.log(movieId)
   console.log(limit)
   console.log(dataSet)
-  res.sendStatus(200)
+
+  const data = [{ movie: 'Terminator', id: 1, score: 2.24 }]
+  console.log(data)
+  res.status(200).json({ data })
 }
 
 module.exports = controller

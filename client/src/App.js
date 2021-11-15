@@ -3,8 +3,9 @@ import './App.css'
 import UserForm from './components/userForm'
 import MovieForm from './components/movieForm'
 import AppChooseDataSet from './components/appChooseDataSet'
-import { getUsersCall, getMoviesCall, getMatchingUsers } from './apiCalls'
+import { getUsersCall, getMoviesCall, getMatchingUsers, getRecommendedMovies, getRecommendationsItemBased } from './apiCalls'
 import ResultType from './components/resultType'
+import AppTable from './components/appTable'
 
 function App () {
   const [state, setState] = useState({
@@ -19,19 +20,6 @@ function App () {
     result: []
   })
 
-  /*
-  useEffect(() => {
-    const getTableContent = async (userId, method, noOfResults, dataSet, resultType) => {
-      if (state.resultType === 1) {
-        const response = await getMatchingUsers(userId, method, noOfResults, dataSet)
-        setState({ result: response.data })
-      }
-      // if (resultType === 2) getRecommendedMovies(userId, method, noOfResults, dataSet)
-      // if (resultType === 3) getRecommendationsItemBased(userId, method, noOfResults, dataSet)
-    }
-    getTableContent(state.user.id, state.method, state.noOfResults, state.dataSet, state.resultType)
-  }, [state.user.id, state.method, state.noOfResults, state.dataSet, state.resultType])
-*/
   useEffect(() => {
     const getUsers = async (dataSet, resultType) => {
       if (resultType === 1 || resultType === 3) {
@@ -61,38 +49,38 @@ function App () {
       const response = await getMatchingUsers(state.user.id, state.method, state.noOfResults, state.dataSet)
       setState((state) => {
         const newState = { ...state }
-        newState.result = response
+        newState.result = response.data
+        return newState
+      })
+    }
+
+    const getTableContentRecommendedMovies = async () => {
+      const response = await getRecommendedMovies(state.movie.id, state.method, state.noOfResults, state.dataSet)
+      setState((state) => {
+        const newState = { ...state }
+        newState.result = response.data
+        return newState
+      })
+    }
+
+    const getTableContentItemBased = async () => {
+      const response = await getRecommendationsItemBased(state.movie.id, state.method, state.noOfResults, state.dataSet)
+      setState((state) => {
+        const newState = { ...state }
+        newState.result = response.data
         return newState
       })
     }
     if (state.resultType === 1 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
-      // getTableContentMatchingUsers()
-      // console.log(state.user, state.method, state.noOfResults)
+      getTableContentMatchingUsers()
     }
-
     if (state.resultType === 2 && state.movie !== '' && state.noOfResults !== '') {
-      console.log(state.movie, state.noOfResults)
+      getTableContentRecommendedMovies()
     }
-
     if (state.resultType === 3 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
-
+      getTableContentItemBased()
     }
-  })
-
-  /*
-  useEffect(() => {
-    const getTableContent = async () => {
-      if (state.resultType === 1) {
-        const response = await getMatchingUsers(state.user.id, state.method, state.noOfResults, state.dataSet)
-        console.log(response)
-        setState({ results: response.data })
-      }
-      if (state.resultType === 2) getRecommendedMovies(state.user.id, state.method, state.noOfResults, state.dataSet)
-      if (state.resultType === 3) getRecommendationsItemBased(state.user.id, state.method, state.noOfResults, state.dataSet)
-    }
-    getTableContent()
-  }, [])
-  */
+  }, [state.resultType, state.user, state.movie, state.method, state.noOfResults])
 
   const handleSelectDataSet = dataSet => {
     const newState = { ...state }
@@ -153,7 +141,7 @@ function App () {
               onSelectUser={handleSelectUser}
               onSelectMethod={handleSelectMethod}
               onSelectNoOfResults={handleSelectNoOfResults}
-              /> : null}
+            /> : null}
 
           {state.resultType === 2
             ? <MovieForm
@@ -161,20 +149,20 @@ function App () {
               onSelectMovie={handleSelectMovie}
               onSelectMethod={handleSelectMethod}
               onSelectNoOfResults={handleSelectNoOfResults}
-              /> : null}
+            /> : null}
 
           <ResultType state={state} onSelectResultType={handleResultType} />
 
-          {state.user !== '' && state.method !== '' && state.noOfResults !== '' && state.resultType === 1
-            ? <h1>1</h1>
+          {state.resultType === 1 && state.result.length > 0 && state.user !== '' && state.method !== '' && state.noOfResults > 0
+            ? <AppTable state={state} />
             : null}
 
-          {state.movie !== '' && state.noOfResults !== '' && state.resultType === 2
-            ? <h1>2</h1>
+          {state.resultType === 2 && state.result.length > 0 && state.movie !== '' && state.noOfResults > 0
+            ? <AppTable state={state} />
             : null}
 
-          {state.user !== '' && state.method !== '' && state.noOfResults !== '' && state.resultType === 3
-            ? <h1>3</h1>
+          {state.resultType === 3 && state.result.length > 0 && state.user !== '' && state.method !== '' && state.noOfResults > 0
+            ? <AppTable state={state} />
             : null}
 
         </div>
