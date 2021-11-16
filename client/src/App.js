@@ -126,7 +126,7 @@ function App () {
   return (
     <div className='App'>
 
-      <div className='d-flex justify-content-center align-items-top mt-5' style={{ height: '100vh' }}>
+      <div className='d-flex justify-content-center align-items-top' style={{ height: '90vh' }}>
         <div>
           <h1 className='mt-5 mb-4'>Assignment 1</h1>
 

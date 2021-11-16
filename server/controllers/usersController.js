@@ -17,10 +17,7 @@ controller.getUsers = async (req, res) => {
 
 controller.getUserNameFromID = async (pathFile, userId) => {
   const users = await csvParser.read(path.join(__dirname, pathFile))
-  console.log(users)
-  console.log(userId)
   const user = users.map(u => u.id === userId)
-  console.log(user)
   return user.name
 }
 

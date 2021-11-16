@@ -9,6 +9,7 @@ function AppChooseDataSet ({ state, onSelectDataSet }) {
           <span
             className={state.dataSet === 'small' ? 'badge rounded-pill bg-primary me-1' : 'badge rounded-pill bg-secondary  px-2'}
             onClick={() => onSelectDataSet('small')}
+
           >
                   Small dataset
           </span>
