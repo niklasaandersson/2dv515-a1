@@ -55,19 +55,18 @@ const getMatchingUsersAccordingEuclidean = async (allUsers, uniqueUsers, userARa
 
 const getMatchingUsersAccordingPearson = async (allUsers, uniqueUsers, userARatings, remainingRatings) => {
   const result = []
-  let sum1 = 0
-  let sum2 = 0
-  let sum1sq = 0
-  let sum2sq = 0
-  let pSum = 0
-  let n = 0
 
   uniqueUsers.forEach(userB => {
+    let sum1 = 0
+    let sum2 = 0
+    let sum1sq = 0
+    let sum2sq = 0
+    let pSum = 0
+    let n = 0
     const userBRatings = remainingRatings.filter(u => u.userId === userB)
-
     userARatings.forEach(rA => {
       userBRatings.forEach(rB => {
-        if (parseFloat(rA.rating) === parseFloat(rB.rating)) {
+        if (rA.movieId === rB.movieId) {
           sum1 += parseFloat(rA.rating)
           sum2 += parseFloat(rB.rating)
           sum1sq += parseFloat(rA.rating) ** 2
@@ -77,16 +76,18 @@ const getMatchingUsersAccordingPearson = async (allUsers, uniqueUsers, userARati
         }
       })
     })
+
     // No ratings in common - return 0
-    if (n === 0) return 0
-
-    // Calculate Pearson
-    const num = pSum - (sum1 * sum2 / n)
-    const den = Math.sqrt((sum1sq - Math.pow(sum1, 2) / n) * (sum2sq - Math.pow(sum2, 2) / n))
-
     const user = allUsers.filter(u => u.id === userB)
-    const pearsonObj = { name: user[0].name, id: userB, score: num / den }
-
+    let pearsonObj = {}
+    if (n === 0) {
+      pearsonObj = { name: user[0].name, id: userB, score: 0 }
+    } else {
+      // Calculate Pearson
+      const num = pSum - (sum1 * sum2 / n)
+      const den = Math.sqrt((sum1sq - Math.pow(sum1, 2) / n) * (sum2sq - Math.pow(sum2, 2) / n))
+      pearsonObj = { name: user[0].name, id: userB, score: num / den }
+    }
     result.push(pearsonObj)
   })
   return result
