@@ -15,10 +15,19 @@ function ResultType ({ state, onSelectResultType }) {
 
       <a href='/#'>
         <span
+          className={state.resultType === 4 ? 'badge rounded-pill bg-primary  me-1' : 'badge rounded-pill bg-secondary  me-1'}
+          onClick={() => onSelectResultType(4)}
+        >
+                  Find recommended movies
+        </span>
+      </a>
+
+      <a href='/#'>
+        <span
           className={state.resultType === 2 ? 'badge rounded-pill bg-primary  me-1' : 'badge rounded-pill bg-secondary  me-1'}
           onClick={() => onSelectResultType(2)}
         >
-                  Find recommended movies
+                  Find top matching movies
         </span>
       </a>
 

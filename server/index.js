@@ -10,6 +10,7 @@ const moviesRouter = require('./routes/moviesRouter')
 const matchingUsersRouter = require('./routes/matchingUsersRouter')
 const recommendedMoviesRouter = require('./routes/recommendedMoviesRouter')
 const recommendationsItemBasedRouter = require('./routes/recommendationsItemBasedRouter')
+const matchingMoviesRouter = require('./routes/matchingMoviesRouter')
 require('dotenv').config()
 
 // ----------------- End of Import-----------------
@@ -41,6 +42,7 @@ app.use(`/api/${process.env.API_VERSION}/movies`, moviesRouter)
 app.use(`/api/${process.env.API_VERSION}/matching-users`, matchingUsersRouter)
 app.use(`/api/${process.env.API_VERSION}/recommended-movies`, recommendedMoviesRouter)
 app.use(`/api/${process.env.API_VERSION}/recommendations-item-based`, recommendationsItemBasedRouter)
+app.use(`/api/${process.env.API_VERSION}/matching-movies`, matchingMoviesRouter)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))

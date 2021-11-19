@@ -12,7 +12,7 @@ function AppTable ({ state }) {
         <tbody>
           {state.result.map(row =>
             <tr key={row.id}>
-              {state.resultType === 2 ? <td>{row.movie}</td> : <td>{row.name}</td>}
+              {state.resultType === 4 ? <td>{row.movie}</td> : <td>{row.name}</td>}
               <td>{row.id}</td>
               <td>{row.score.toFixed(4)}</td>
             </tr>

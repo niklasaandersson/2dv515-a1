@@ -3,7 +3,7 @@ import './App.css'
 import UserForm from './components/userForm'
 import MovieForm from './components/movieForm'
 import AppChooseDataSet from './components/appChooseDataSet'
-import { getUsersCall, getMoviesCall, getMatchingUsers, getRecommendedMovies, getRecommendationsItemBased } from './apiCalls'
+import { getUsersCall, getMoviesCall, getMatchingUsers, getRecommendedMovies, getRecommendationsItemBased, getMatchingMovies } from './apiCalls'
 import ResultType from './components/resultType'
 import AppTable from './components/appTable'
 
@@ -55,7 +55,7 @@ function App () {
     }
 
     const getTableContentRecommendedMovies = async () => {
-      const response = await getRecommendedMovies(state.movie.id, state.method, state.noOfResults, state.dataSet)
+      const response = await getRecommendedMovies(state.user.id, state.method, state.noOfResults, state.dataSet)
       setState((state) => {
         const newState = { ...state }
         newState.result = response.data
@@ -64,21 +64,34 @@ function App () {
     }
 
     const getTableContentItemBased = async () => {
-      const response = await getRecommendationsItemBased(state.movie.id, state.method, state.noOfResults, state.dataSet)
+      const response = await getRecommendationsItemBased(state.user.id, state.method, state.noOfResults, state.dataSet)
       setState((state) => {
         const newState = { ...state }
         newState.result = response.data
         return newState
       })
     }
+
+    const getTableContentMatchingMovies = async () => {
+      const response = await getMatchingMovies(state.movie.id, state.method, state.noOfResults, state.dataSet)
+      setState((state) => {
+        const newState = { ...state }
+        newState.result = response.data
+        return newState
+      })
+    }
+
     if (state.resultType === 1 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
       getTableContentMatchingUsers()
     }
     if (state.resultType === 2 && state.movie !== '' && state.noOfResults !== '') {
-      getTableContentRecommendedMovies()
+      getTableContentMatchingMovies()
     }
     if (state.resultType === 3 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
       getTableContentItemBased()
+    }
+    if (state.resultType === 4 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
+      getTableContentRecommendedMovies()
     }
   }, [state.resultType, state.user, state.movie, state.method, state.noOfResults])
 
@@ -135,13 +148,13 @@ function App () {
             onSelectDataSet={handleSelectDataSet}
           />
 
-          {state.resultType === 1 || state.resultType === 3
+          {state.resultType === 1 || state.resultType === 3 || state.resultType === 4
             ? <UserForm
               state={state}
               onSelectUser={handleSelectUser}
               onSelectMethod={handleSelectMethod}
               onSelectNoOfResults={handleSelectNoOfResults}
-            /> : null}
+              /> : null}
 
           {state.resultType === 2
             ? <MovieForm
@@ -149,7 +162,7 @@ function App () {
               onSelectMovie={handleSelectMovie}
               onSelectMethod={handleSelectMethod}
               onSelectNoOfResults={handleSelectNoOfResults}
-            /> : null}
+              /> : null}
 
           <ResultType state={state} onSelectResultType={handleResultType} />
 
@@ -162,6 +175,10 @@ function App () {
             : null}
 
           {state.resultType === 3 && state.result.length > 0 && state.user !== '' && state.method !== '' && state.noOfResults > 0
+            ? <AppTable state={state} />
+            : null}
+
+          {state.resultType === 4 && state.result.length > 0 && state.user !== '' && state.method !== '' && state.noOfResults > 0
             ? <AppTable state={state} />
             : null}
 

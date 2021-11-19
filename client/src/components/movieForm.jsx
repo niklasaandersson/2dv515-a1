@@ -1,6 +1,6 @@
 import React from 'react'
 
-function MovieForm ({ state, onSelectMovie, onSelectNoOfResults }) {
+function MovieForm ({ state, onSelectMovie, onSelectMethod, onSelectNoOfResults }) {
   return (
     <>
       <div className='row'>
@@ -24,6 +24,22 @@ function MovieForm ({ state, onSelectMovie, onSelectNoOfResults }) {
         </div>
 
         <div className='col'>
+          <select
+            className='form-control'
+            name='method'
+            placeholder='Similarity'
+            autoComplete='off'
+            required
+            value={state.method}
+            onChange={onSelectMethod}
+          >
+            <option value=''>--Choose a method--</option>
+            <option value='euclidean'>Euclidean</option>
+            <option value='pearson'>Pearson</option>
+          </select>
+        </div>
+
+        <div className='col'>
           <input
             type='number'
             className='form-control'
@@ -36,7 +52,6 @@ function MovieForm ({ state, onSelectMovie, onSelectNoOfResults }) {
           />
         </div>
 
-        <div className='col' />
       </div>
     </>
 
