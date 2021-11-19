@@ -57,7 +57,6 @@ controller.getRecommendedMovies = async (req, res) => {
   unSeenMovies.forEach(m => data.push({ movie: m.title, id: m.id, score: m.wSumSim }))
   data = data.sort((a, b) => b.score - a.score)
   data = data.slice(0, limit)
-  console.log(data)
   res.status(200).json({ data })
 }
 

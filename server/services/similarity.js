@@ -48,8 +48,6 @@ similarity.movies = async (movieId, method, dataSet) => {
 
   allMovies.forEach(movie => {
     const ratings = allRatings.filter(m => m.movieId === movie.id)
-    console.log(movie)
-    console.log(ratings)
     movie.ratings = ratings
   })
 
