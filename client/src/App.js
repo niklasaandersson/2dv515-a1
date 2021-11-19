@@ -93,7 +93,7 @@ function App () {
     if (state.resultType === 4 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
       getTableContentRecommendedMovies()
     }
-  }, [state.resultType, state.user, state.movie, state.method, state.noOfResults])
+  }, [state.resultType, state.user, state.movie, state.method, state.noOfResults, state.dataSet])
 
   const handleSelectDataSet = dataSet => {
     const newState = { ...state }
@@ -154,7 +154,7 @@ function App () {
               onSelectUser={handleSelectUser}
               onSelectMethod={handleSelectMethod}
               onSelectNoOfResults={handleSelectNoOfResults}
-              /> : null}
+            /> : null}
 
           {state.resultType === 2
             ? <MovieForm
@@ -162,7 +162,7 @@ function App () {
               onSelectMovie={handleSelectMovie}
               onSelectMethod={handleSelectMethod}
               onSelectNoOfResults={handleSelectNoOfResults}
-              /> : null}
+            /> : null}
 
           <ResultType state={state} onSelectResultType={handleResultType} />
 
