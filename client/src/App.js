@@ -55,6 +55,7 @@ function App () {
     }
 
     const getTableContentRecommendedMovies = async () => {
+      console.log('called?')
       const response = await getRecommendedMovies(state.user.id, state.method, state.noOfResults, state.dataSet)
       setState((state) => {
         const newState = { ...state }
@@ -82,15 +83,19 @@ function App () {
     }
 
     if (state.resultType === 1 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
+      console.log('executing 1')
       getTableContentMatchingUsers()
     }
     if (state.resultType === 2 && state.movie !== '' && state.noOfResults !== '') {
+      console.log('executing 2')
       getTableContentMatchingMovies()
     }
     if (state.resultType === 3 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
+      console.log('executing 3 ')
       getTableContentItemBased()
     }
     if (state.resultType === 4 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
+      console.log('executing 4')
       getTableContentRecommendedMovies()
     }
   }, [state.resultType, state.user, state.movie, state.method, state.noOfResults, state.dataSet])
@@ -154,7 +159,7 @@ function App () {
               onSelectUser={handleSelectUser}
               onSelectMethod={handleSelectMethod}
               onSelectNoOfResults={handleSelectNoOfResults}
-            /> : null}
+              /> : null}
 
           {state.resultType === 2
             ? <MovieForm
@@ -162,7 +167,7 @@ function App () {
               onSelectMovie={handleSelectMovie}
               onSelectMethod={handleSelectMethod}
               onSelectNoOfResults={handleSelectNoOfResults}
-            /> : null}
+              /> : null}
 
           <ResultType state={state} onSelectResultType={handleResultType} />
 

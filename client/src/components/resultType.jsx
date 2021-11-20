@@ -9,7 +9,7 @@ function ResultType ({ state, onSelectResultType }) {
           className={state.resultType === 1 ? 'badge rounded-pill bg-primary  me-1' : 'badge rounded-pill bg-secondary  me-1'}
           onClick={() => onSelectResultType(1)}
         >
-                  Find top matching users
+          Find top matching users
         </span>
       </a>
 
@@ -18,7 +18,7 @@ function ResultType ({ state, onSelectResultType }) {
           className={state.resultType === 4 ? 'badge rounded-pill bg-primary  me-1' : 'badge rounded-pill bg-secondary  me-1'}
           onClick={() => onSelectResultType(4)}
         >
-                  Find recommended movies
+          Find recommended movies
         </span>
       </a>
 
@@ -27,7 +27,7 @@ function ResultType ({ state, onSelectResultType }) {
           className={state.resultType === 2 ? 'badge rounded-pill bg-primary  me-1' : 'badge rounded-pill bg-secondary  me-1'}
           onClick={() => onSelectResultType(2)}
         >
-                  Find top matching movies
+          Find top matching movies
         </span>
       </a>
 
@@ -36,7 +36,7 @@ function ResultType ({ state, onSelectResultType }) {
           className={state.resultType === 3 ? 'badge rounded-pill bg-primary' : 'badge rounded-pill bg-secondary'}
           onClick={() => onSelectResultType(3)}
         >
-                  Find recommendations, item-based
+          ßFind recommendations, item-based
         </span>
       </a>
 

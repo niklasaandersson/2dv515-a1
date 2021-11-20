@@ -3,8 +3,7 @@ export async function getUsersCall (dataSet) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'Access-Control-Allow-Origin': `${process.env.FRONTEND_URL}`
+      Accept: 'application/json'
     }
   })
   return response.json()
@@ -15,8 +14,7 @@ export async function getMoviesCall (dataSet) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'Access-Control-Allow-Origin': `${process.env.FRONTEND_URL}`
+      Accept: 'application/json'
     }
   })
   return response.json()
@@ -27,9 +25,7 @@ export async function getMatchingUsers (userId, method, limit, dataSet) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'Access-Control-Allow-Origin': `${process.env.FRONTEND_URL}`
-
+      Accept: 'application/json'
     }
   })
   return response.json()
@@ -40,8 +36,7 @@ export async function getRecommendedMovies (userId, method, limit, dataSet) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'Access-Control-Allow-Origin': `${process.env.FRONTEND_URL}`
+      Accept: 'application/json'
     }
   })
   return response.json()
@@ -52,8 +47,7 @@ export async function getRecommendationsItemBased (userId, method, limit, dataSe
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'Access-Control-Allow-Origin': `${process.env.FRONTEND_URL}`
+      Accept: 'application/json'
     }
   })
   return response.json()
@@ -64,8 +58,7 @@ export async function getMatchingMovies (movieId, method, limit, dataSet) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'Access-Control-Allow-Origin': `${process.env.FRONTEND_URL}`
+      Accept: 'application/json'
     }
   })
   return response.json()
