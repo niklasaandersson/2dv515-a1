@@ -12,6 +12,7 @@ function UserForm ({ state, onSelectUser, onSelectMethod, onSelectNoOfResults })
             autoComplete='off'
             required
             onChange={onSelectUser}
+            value={JSON.stringify({ id: state.user.id, name: state.user.name })}
           >
             <option value=''>--Choose a user--</option>
             {state.users.map(user =>
@@ -33,7 +34,7 @@ function UserForm ({ state, onSelectUser, onSelectMethod, onSelectNoOfResults })
           >
             <option value=''>--Choose a method--</option>
             <option value='euclidean'>Euclidean</option>
-            <option value='pearson'>Pearson</option>
+            {state.resultType !== 3 ? <option value='pearson'>Pearson</option> : null}
           </select>
         </div>
 
@@ -42,7 +43,7 @@ function UserForm ({ state, onSelectUser, onSelectMethod, onSelectNoOfResults })
             type='number'
             className='form-control'
             placeholder='No. of Results'
-            defaultValue=''
+            value={state.noOfResults}
             min='1'
             max={state.users.length - 1}
             required

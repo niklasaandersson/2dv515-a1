@@ -36,7 +36,7 @@ function ResultType ({ state, onSelectResultType }) {
           className={state.resultType === 3 ? 'badge rounded-pill bg-primary' : 'badge rounded-pill bg-secondary'}
           onClick={() => onSelectResultType(3)}
         >
-          ßFind recommendations, item-based
+          Find recommendations, item-based
         </span>
       </a>
 

@@ -12,6 +12,7 @@ function MovieForm ({ state, onSelectMovie, onSelectMethod, onSelectNoOfResults 
             autoComplete='off'
             required
             onChange={onSelectMovie}
+            value={JSON.stringify(state.movie)}
           >
 
             <option value=''>--Choose a movie--</option>
@@ -44,7 +45,7 @@ function MovieForm ({ state, onSelectMovie, onSelectMethod, onSelectNoOfResults 
             type='number'
             className='form-control'
             placeholder='No. of Results'
-            defaultValue=''
+            value={state.noOfResults}
             min='1'
             max={state.movies.length - 1}
             required

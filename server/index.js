@@ -1,16 +1,18 @@
 'use strict'
-
 const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const path = require('path')
+
 const usersRouter = require('./routes/usersRouter')
 const moviesRouter = require('./routes/moviesRouter')
 const matchingUsersRouter = require('./routes/matchingUsersRouter')
 const recommendedMoviesRouter = require('./routes/recommendedMoviesRouter')
 const recommendationsItemBasedRouter = require('./routes/recommendationsItemBasedRouter')
 const matchingMoviesRouter = require('./routes/matchingMoviesRouter')
+
+const utils = require('./utils/prepareItemBased')
 require('dotenv').config()
 
 // ----------------- End of Import-----------------
@@ -29,6 +31,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(helmet())
 app.use(logger('dev', { skip: (req, res) => process.env.NODE_ENV === 'test' }))
+
+// Check for item-based file
+
+utils.prepareItemBasedFiles(['./data/movies_small', './data/movies_large'])
 
 app.use((req, res, next) => {
   res.setHeader('Content-Type', 'application/json')
