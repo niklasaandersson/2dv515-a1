@@ -20,7 +20,7 @@ function AppTable ({ state }) {
               </tr>
             )}
           </tbody>
-        </table>}
+          </table>}
     </>
 
   )

@@ -5,7 +5,8 @@ import MovieForm from './components/movieForm'
 import AppChooseDataSet from './components/appChooseDataSet'
 import { getUsersCall, getMoviesCall, getMatchingUsers, getRecommendedMovies, getRecommendationsItemBased, getMatchingMovies } from './apiCalls'
 import ResultType from './components/resultType'
-import AppTable from './components/appTable'
+import Content from './components/content'
+import Loader from './components/loader'
 import Footer from './components/footer'
 
 function App () {
@@ -18,8 +19,11 @@ function App () {
     method: '',
     noOfResults: '',
     resultType: 1,
-    result: []
+    result: [],
+    isLoading: false
   })
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading2, setIsLoading2] = useState(false)
 
   useEffect(() => {
     const getUsersAndMovies = async (dataSet, resultType) => {
@@ -41,11 +45,13 @@ function App () {
         })
       }
     }
-
+    setIsLoading2(true)
     getUsersAndMovies(state.dataSet, state.resultType)
+    setIsLoading2(false)
   }, [state.dataSet, state.resultType])
 
   useEffect(() => {
+    setIsLoading(true)
     setState((state) => {
       const newState = { ...state }
       newState.result = []
@@ -88,6 +94,7 @@ function App () {
     if (state.resultType === 4 && state.user !== '' && state.noOfResults !== '' && state.method !== '') {
       getResult(state.resultType)
     }
+    setIsLoading(false)
   }, [state.resultType, state.user, state.movie, state.method, state.noOfResults, state.dataSet])
 
   const handleSelectDataSet = dataSet => {
@@ -134,52 +141,43 @@ function App () {
 
   return (
     <div className='App'>
+      {isLoading
+        ? <Loader />
+        : <>
+          <div className='d-flex justify-content-center align-items-top' style={{ height: '90vh', padding: '0 10px' }}>
+            <div>
+              <h1 className='mt-5 mb-4'>Assignment 1</h1>
 
-      <div className='d-flex justify-content-center align-items-top' style={{ height: '90vh' }}>
-        <div>
-          <h1 className='mt-5 mb-4'>Assignment 1</h1>
+              <AppChooseDataSet
+                state={state}
+                onSelectDataSet={handleSelectDataSet}
+              />
 
-          <AppChooseDataSet
-            state={state}
-            onSelectDataSet={handleSelectDataSet}
-          />
+              {state.resultType === 1 || state.resultType === 3 || state.resultType === 4
+                ? <UserForm
+                  state={state}
+                  onSelectUser={handleSelectUser}
+                  onSelectMethod={handleSelectMethod}
+                  onSelectNoOfResults={handleSelectNoOfResults}
+                /> : null}
 
-          {state.resultType === 1 || state.resultType === 3 || state.resultType === 4
-            ? <UserForm
-              state={state}
-              onSelectUser={handleSelectUser}
-              onSelectMethod={handleSelectMethod}
-              onSelectNoOfResults={handleSelectNoOfResults}
-              /> : null}
+              {state.resultType === 2
+                ? <MovieForm
+                  state={state}
+                  onSelectMovie={handleSelectMovie}
+                  onSelectMethod={handleSelectMethod}
+                  onSelectNoOfResults={handleSelectNoOfResults}
+                /> : null}
 
-          {state.resultType === 2
-            ? <MovieForm
-              state={state}
-              onSelectMovie={handleSelectMovie}
-              onSelectMethod={handleSelectMethod}
-              onSelectNoOfResults={handleSelectNoOfResults}
-              /> : null}
+              <ResultType state={state} onSelectResultType={handleResultType} />
 
-          <ResultType state={state} onSelectResultType={handleResultType} />
-          {state.resultType === 1 && state.user !== '' && state.method !== '' && state.noOfResults > 0
-            ? <AppTable state={state} />
-            : null}
+              <Content state={state} />
 
-          {state.resultType === 2 && state.movie !== '' && state.noOfResults > 0
-            ? <AppTable state={state} />
-            : null}
-
-          {state.resultType === 3 && state.user !== '' && state.method !== '' && state.noOfResults > 0
-            ? <AppTable state={state} />
-            : null}
-
-          {state.resultType === 4 && state.user !== '' && state.method !== '' && state.noOfResults > 0
-            ? <AppTable state={state} />
-            : null}
-
-        </div>
-      </div>
-      <div />
+            </div>
+          </div>
+          <div />
+          <Footer />
+        </>}
     </div>
   )
 }
